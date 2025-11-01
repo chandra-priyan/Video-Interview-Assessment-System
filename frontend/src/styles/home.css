@@ -1,0 +1,4 @@
+.home { max-width: 900px; margin: 0 auto; }
+.home h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.home p { color: var(--muted); margin-bottom: 16px; }
+.home .toolbar { display: flex; gap: 12px; }

@@ -26,21 +26,23 @@ export default function ReviewList() {
   }, [])
 
   if (loading) return <Loader label="Loading submissions..." />
-  if (error) return <div style={{ color: 'red' }}>{error}</div>
+  if (error) return <div className="error-text">{error}</div>
 
   return (
-    <div>
+    <div className="card">
       <h3>Submissions</h3>
-      <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+      <div className="toolbar">
         <button onClick={load}>Refresh</button>
       </div>
       {items.length === 0 ? (
-        <div>No submissions yet.</div>
+        <div className="empty">No submissions yet.</div>
       ) : (
-        <ul>
+        <ul className="list">
           {items.map((r) => (
-            <li key={r.id} style={{ marginBottom: 12 }}>
-              <Link to={`/admin/reviews/${r.id}`}>{r.candidateName} - {r.questionTitle}</Link>
+            <li key={r.id} className="list-item">
+              <Link className="link" to={`/admin/reviews/${r.id}`}>
+                {r.candidateName} - {r.questionTitle}
+              </Link>
             </li>
           ))}
         </ul>
@@ -48,3 +50,4 @@ export default function ReviewList() {
     </div>
   )
 }
+

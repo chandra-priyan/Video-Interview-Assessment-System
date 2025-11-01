@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import api from '../../utils/api'
 import { useNavigate } from 'react-router-dom'
+import '../../styles/auth.css'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -36,7 +37,7 @@ export default function Signup() {
           <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <label>
             Role
-            <select value={role} onChange={(e) => setRole(e.target.value)} style={{ display: 'block', marginTop: 6 }}>
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="candidate">Candidate</option>
               <option value="admin">Admin</option>
             </select>

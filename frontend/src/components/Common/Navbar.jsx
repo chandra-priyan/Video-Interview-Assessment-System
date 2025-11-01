@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import ThemeToggle from './ThemeToggle'
+import '../../styles/navbar.css'
 
 export default function Navbar() {
   const { pathname } = useLocation()
@@ -30,6 +32,7 @@ export default function Navbar() {
             <>
               <Link to="/login" className={`nav-link ${isActive('/login') ? 'active' : ''}`}>Login</Link>
               <Link to="/signup" className={`nav-link ${isActive('/signup') ? 'active' : ''}`}>Signup</Link>
+              <ThemeToggle />
             </>
           ) : (
             <>
@@ -40,6 +43,7 @@ export default function Navbar() {
               {!isCandidate && (
                 <Link to="/admin" className={`nav-link ${isActive('/admin') ? 'active' : ''}`}>Admin</Link>
               )}
+              <ThemeToggle />
               <button onClick={onLogout}>Logout</button>
             </>
           )}

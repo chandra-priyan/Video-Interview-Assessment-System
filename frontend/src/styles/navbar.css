@@ -1,0 +1,128 @@
+/* Navbar Styles */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .navbar {
+  background: rgba(15, 23, 42, 0.85);
+  border-bottom-color: rgba(51, 65, 85, 0.6);
+}
+
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .brand {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-links .nav-link {
+  padding: 8px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: #475569;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-links .nav-link:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  transform: translateY(-1px);
+}
+
+.nav-links .nav-link.active {
+  background: rgba(99, 102, 241, 0.15);
+  color: #6366f1;
+}
+
+[data-theme="dark"] .nav-links .nav-link {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .nav-links .nav-link:hover {
+  background: rgba(124, 58, 237, 0.15);
+  color: #a855f7;
+}
+
+[data-theme="dark"] .nav-links .nav-link.active {
+  background: rgba(124, 58, 237, 0.2);
+  color: #a855f7;
+}
+
+.nav-links button {
+  margin-left: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-links button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .navbar-inner {
+    padding: 12px 16px;
+  }
+  
+  .brand {
+    font-size: 16px;
+  }
+  
+  .nav-links {
+    gap: 4px;
+  }
+  
+  .nav-links .nav-link {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  
+  .nav-links button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}

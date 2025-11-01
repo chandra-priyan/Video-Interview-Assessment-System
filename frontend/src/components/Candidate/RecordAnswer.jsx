@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import api from '../../utils/api'
+import '../../styles/record-answer.css'
 
 export default function RecordAnswer() {
   const videoRef = useRef(null)
@@ -14,7 +15,7 @@ export default function RecordAnswer() {
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [questions, setQuestions] = useState([])
-  const [questionId, setQuestionId] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [successMsg, setSuccessMsg] = useState('')
   const [hasRecording, setHasRecording] = useState(false)
 
@@ -117,15 +118,16 @@ export default function RecordAnswer() {
   }
 
   const submitResponse = async () => {
-    if (!videoURL || !questionId) {
-      setError('Select a question and upload a video first')
+    const q = questions[currentIndex]
+    if (!videoURL || !q?.id) {
+      setError('Upload a video for the current question first')
       return
     }
     setSubmitting(true)
     setError('')
     setSuccessMsg('')
     try {
-      await api.post('/response/submit', { items: [{ questionId, videoUrl: videoURL }] })
+      await api.post('/response/submit', { items: [{ questionId: q.id, videoUrl: videoURL }] })
       setSuccessMsg('Response submitted!')
     } catch (err) {
       setError(err.response?.data?.message || 'Submit failed')
@@ -134,38 +136,113 @@ export default function RecordAnswer() {
     }
   }
 
+  const goPrev = () => {
+    if (currentIndex <= 0) return
+    setCurrentIndex((i) => i - 1)
+    setVideoURL('')
+    setHasRecording(false)
+    if (playbackRef.current) playbackRef.current.src = ''
+  }
+
+  const goNext = () => {
+    if (currentIndex >= Math.max(0, questions.length - 1)) return
+    setCurrentIndex((i) => i + 1)
+    setVideoURL('')
+    setHasRecording(false)
+    if (playbackRef.current) playbackRef.current.src = ''
+  }
+
   return (
-    <div className="card">
-      <h3>Record Answer</h3>
-      <div style={{ display: 'grid', gap: 12 }}>
-        <label>
-          Select question
-          <select value={questionId} onChange={(e) => setQuestionId(e.target.value)} style={{ display: 'block', marginTop: 6 }}>
-            <option value="">-- choose --</option>
-            {questions.map(q => (
-              <option key={q.id} value={q.id}>{q.title} - {q.prompt?.slice(0, 80)}</option>
-            ))}
-          </select>
-        </label>
-        <video ref={videoRef} autoPlay muted playsInline style={{ width: '100%', background: '#000', borderRadius: 8 }} />
-        <div style={{ display: 'flex', gap: 8 }}>
-          {!recording && <button onClick={startRecording}>Start Recording</button>}
-          {recording && <button onClick={stopRecording}>Stop</button>}
-          <button onClick={uploadVideo} disabled={uploading || !hasRecording}>{uploading ? 'Uploading...' : 'Upload'}</button>
-          {hasRecording && !recording && <button onClick={resetRecording}>Re-record</button>}
-          <button onClick={submitResponse} disabled={submitting || !videoURL || !questionId}>{submitting ? 'Submitting...' : 'Submit Response'}</button>
+    <div className="record-answer-container">
+      <div className="record-answer-card">
+        <div className="record-answer-header">
+          <h1 className="record-answer-title">Record Your Answer</h1>
         </div>
-        {error && <div className="error-text">{error}</div>}
-        {successMsg && <div style={{ color: 'green' }}>{successMsg}</div>}
-        <div>
-          <h4>Playback</h4>
-          <video ref={playbackRef} controls style={{ width: '100%', background: '#000', borderRadius: 8 }} />
-        </div>
-        {videoURL && (
-          <div>
-            <strong>Uploaded URL:</strong> <a href={videoURL} target="_blank" rel="noreferrer">{videoURL}</a>
+
+        {/* Question Section */}
+        <div className="question-section">
+          <div className="question-header">
+            <span className="question-label">Question</span>
+            <span className="question-counter">
+              {questions.length > 0 ? `${currentIndex + 1} / ${questions.length}` : '0 / 0'}
+            </span>
           </div>
-        )}
+          <div className="question-title">{questions[currentIndex]?.title || 'Loading...'}</div>
+          <div className="question-prompt">{questions[currentIndex]?.prompt || ''}</div>
+        </div>
+
+        {/* Video Section */}
+        <div className="video-section">
+          <div className="video-container">
+            <video ref={videoRef} autoPlay muted playsInline className="video-preview" />
+            {recording && (
+              <div className="video-overlay recording-indicator">
+                <span className="loading-spinner"></span>
+                Recording...
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Control Buttons */}
+        <div className="control-toolbar">
+          {!recording && (
+            <button className="control-btn control-btn-primary" onClick={startRecording}>
+              Start Recording
+            </button>
+          )}
+          {recording && (
+            <button className="control-btn control-btn-danger" onClick={stopRecording}>
+              Stop Recording
+            </button>
+          )}
+          <button 
+            className="control-btn control-btn-success" 
+            onClick={uploadVideo} 
+            disabled={uploading || !hasRecording}
+          >
+            {uploading && <span className="loading-spinner"></span>}
+            {uploading ? 'Uploading...' : 'Upload'}
+          </button>
+          {hasRecording && !recording && (
+            <button className="control-btn control-btn-warning" onClick={resetRecording}>
+              Re-record
+            </button>
+          )}
+          <button 
+            className="control-btn control-btn-primary" 
+            onClick={submitResponse} 
+            disabled={submitting || !videoURL || !questions[currentIndex]?.id}
+          >
+            {submitting && <span className="loading-spinner"></span>}
+            {submitting ? 'Submitting...' : 'Submit Response'}
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <div className="navigation-section">
+          <button className="nav-btn" onClick={goPrev} disabled={currentIndex === 0}>
+            ← Previous Question
+          </button>
+          <button className="nav-btn" onClick={goNext} disabled={currentIndex >= Math.max(0, questions.length - 1)}>
+            Next Question →
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className="message-section">
+          {error && <div className="error-message">{error}</div>}
+          {successMsg && <div className="success-message">{successMsg}</div>}
+        </div>
+
+        {/* Playback Section */}
+        <div className="playback-section">
+          <h3 className="playback-title">Playback</h3>
+          <div className="video-container">
+            <video ref={playbackRef} controls className="video-playback" />
+          </div>
+        </div>
+
       </div>
     </div>
   )
