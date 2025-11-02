@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import api from '../../utils/api'
 import Loader from '../Common/Loader'
 
 export default function QuestionList() {
+  const navigate = useNavigate()
   const [questions, setQuestions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -33,7 +35,11 @@ export default function QuestionList() {
       ) : (
         <ul>
           {questions.map((q) => (
-            <li key={q.id}>
+            <li 
+              key={q.id} 
+              onClick={() => navigate('/candidate/record', { state: { question: q } })}
+              className="clickable-question"
+            >
               <strong>{q.title}</strong>
               <div>{q.prompt}</div>
             </li>

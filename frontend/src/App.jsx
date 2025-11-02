@@ -5,10 +5,10 @@ import Navbar from './components/Common/Navbar.jsx'
 import './styles/global-theme.css'
 import Home from './pages/Home.jsx'
 import CandidateDashboard from './pages/CandidateDashboard.jsx'
+import CandidateQuestions from './pages/CandidateQuestions.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import Login from './components/Auth/Login.jsx'
 import Signup from './components/Auth/Signup.jsx'
-import QuestionList from './components/Candidate/QuestionList.jsx'
 import RecordAnswer from './components/Candidate/RecordAnswer.jsx'
 import ReviewDetail from './components/Admin/ReviewDetail.jsx'
 
@@ -47,7 +47,7 @@ function App() {
             <Route path="/signup" element={isAuthed ? <Navigate to={isAdmin ? '/admin' : '/candidate'} replace /> : <Signup />} />
 
             <Route path="/candidate" element={!isAuthed ? <Navigate to="/login" replace /> : (isAdmin ? <Navigate to="/admin" replace /> : <CandidateDashboard />)} />
-            <Route path="/candidate/questions" element={!isAuthed ? <Navigate to="/login" replace /> : (isAdmin ? <Navigate to="/admin" replace /> : <QuestionList />)} />
+            <Route path="/candidate/questions" element={!isAuthed ? <Navigate to="/login" replace /> : (isAdmin ? <Navigate to="/admin" replace /> : <CandidateQuestions />)} />
             <Route path="/candidate/record" element={!isAuthed ? <Navigate to="/login" replace /> : (isAdmin ? <Navigate to="/admin" replace /> : <RecordAnswer />)} />
 
             <Route path="/admin" element={!isAuthed ? <Navigate to="/login" replace /> : (isCandidate ? <Navigate to="/candidate" replace /> : <AdminDashboard />)} />

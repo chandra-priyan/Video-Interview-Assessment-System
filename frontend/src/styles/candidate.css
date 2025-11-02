@@ -152,6 +152,12 @@
   outline-offset: 2px;
 }
 
+/* Questions Section Container */
+.candidate-dashboard .questions-section {
+  width: 100%;
+  margin: 0 auto;
+}
+
 /* Section Headers */
 .candidate-dashboard h3 {
   font-size: 24px;
@@ -223,6 +229,10 @@
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
+}
+
+.candidate-dashboard ul li.clickable-question {
+  cursor: pointer;
 }
 
 .candidate-dashboard ul li::before {
