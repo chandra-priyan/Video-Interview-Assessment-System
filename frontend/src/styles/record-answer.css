@@ -40,14 +40,42 @@
 
 /* Main Container */
 .record-answer-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 24px 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background: var(--record-bg-primary);
-  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .record-answer-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 120px 24px 60px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.record-answer-inner {
   background: var(--record-bg-card);
   border: 1px solid var(--record-border-color);
   border-radius: 24px;
@@ -61,18 +89,19 @@
 /* Header */
 .record-answer-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .record-answer-title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
   color: var(--record-text-primary);
-  margin-bottom: 8px;
+  margin: 0;
   background: var(--record-gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: -0.5px;
 }
 
 /* Question Section */
@@ -122,7 +151,7 @@
 
 /* Video Section */
 .video-section {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .video-container {
@@ -131,14 +160,20 @@
   overflow: hidden;
   background: #000;
   box-shadow: var(--record-shadow-lg);
-  margin-bottom: 16px;
+  border: 2px solid var(--record-border-color);
+  transition: border-color 0.3s ease;
+}
+
+.video-container:hover {
+  border-color: var(--record-border-hover);
 }
 
 .video-preview,
 .video-playback {
   width: 100%;
   height: auto;
-  min-height: 300px;
+  min-height: 400px;
+  max-height: 500px;
   object-fit: cover;
   display: block;
 }
@@ -169,12 +204,14 @@
 .control-toolbar {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
-  margin-bottom: 24px;
-  padding: 20px;
+  margin-bottom: 28px;
+  padding: 24px;
   background: var(--record-bg-secondary);
   border: 1px solid var(--record-border-color);
   border-radius: 16px;
+  box-shadow: var(--record-shadow-sm);
 }
 
 .control-btn {
@@ -380,11 +417,11 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .record-answer-container {
-    padding: 24px 16px 48px;
+  .record-answer-card {
+    padding: 100px 16px 48px;
   }
   
-  .record-answer-card {
+  .record-answer-inner {
     padding: 24px 20px;
   }
   
@@ -416,11 +453,11 @@
 }
 
 @media (max-width: 480px) {
-  .record-answer-container {
-    padding: 20px 12px 40px;
+  .record-answer-card {
+    padding: 90px 12px 40px;
   }
   
-  .record-answer-card {
+  .record-answer-inner {
     padding: 20px 16px;
   }
   

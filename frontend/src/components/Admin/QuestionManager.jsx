@@ -56,82 +56,80 @@ export default function QuestionManager() {
   return (
     <>
     <style>{`
-        * {
-          box-sizing: border-box;
-        }
-        
-        body {
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          min-height: 100vh;
-          padding: 2rem;
-        }
-        
-        .card {
-          background: white;
+        .question-manager-card {
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
           border-radius: 16px;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-          padding: 2.5rem;
-          max-width: 900px;
+          padding: 2rem;
+          max-width: 1000px;
           margin: 0 auto;
+          color: white;
         }
         
-        h3 {
-          margin: 0 0 2rem 0;
-          font-size: 1.875rem;
+        .question-manager-card h3 {
+          margin: 0 0 1.5rem 0;
+          font-size: 1.75rem;
           font-weight: 700;
-          color: #1e293b;
-          border-bottom: 3px solid #667eea;
-          padding-bottom: 0.75rem;
+          color: white;
+          letter-spacing: -0.3px;
+          border-bottom: none;
+          padding-bottom: 0;
         }
         
-        .form-grid {
+        .question-manager-card .form-grid {
           display: grid;
           grid-template-columns: 1fr auto auto;
           gap: 1rem;
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
           align-items: start;
         }
         
         @media (max-width: 768px) {
-          .form-grid {
+          .question-manager-card .form-grid {
             grid-template-columns: 1fr;
           }
         }
         
-        input {
+        .question-manager-card input {
           padding: 0.875rem 1.125rem;
-          border: 2px solid #e2e8f0;
+          border: 1px solid rgba(255, 255, 255, 0.3);
           border-radius: 10px;
-          font-size: 1rem;
+          font-size: 0.95rem;
           transition: all 0.2s ease;
           font-family: inherit;
-          background: #f8fafc;
+          background: rgba(255, 255, 255, 0.15);
+          color: white;
         }
         
-        input:focus {
+        .question-manager-card input::placeholder {
+          color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .question-manager-card input:focus {
           outline: none;
-          border-color: #667eea;
-          background: white;
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          border-color: rgba(255, 255, 255, 0.5);
+          background: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
         }
         
-        input[type="number"] {
+        .question-manager-card input[type="number"] {
           width: 150px;
         }
         
         @media (max-width: 768px) {
-          input[type="number"] {
+          .question-manager-card input[type="number"] {
             width: 100%;
           }
         }
         
-        button {
-          padding: 0.875rem 1.75rem;
-          border: none;
-          border-radius: 10px;
-          font-size: 1rem;
+        .question-manager-card button {
+          padding: 0.75rem 1.5rem;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: 12px;
+          font-size: 0.95rem;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
@@ -139,41 +137,42 @@ export default function QuestionManager() {
           white-space: nowrap;
         }
         
-        button[type="submit"] {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .question-manager-card button[type="submit"] {
+          background: rgba(139, 92, 246, 0.85);
           color: white;
         }
         
-        button[type="submit"]:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        .question-manager-card button[type="submit"]:hover:not(:disabled) {
+          background: rgba(139, 92, 246, 1);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
         }
         
-        button[type="submit"]:active:not(:disabled) {
+        .question-manager-card button[type="submit"]:active:not(:disabled) {
           transform: translateY(0);
         }
         
-        button:disabled {
+        .question-manager-card button:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }
         
-        .danger {
-          background: #ef4444;
+        .question-manager-card .danger {
+          background: rgba(239, 68, 68, 0.85);
           color: white;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
         }
         
-        .danger:hover {
-          background: #dc2626;
+        .question-manager-card .danger:hover {
+          background: rgba(239, 68, 68, 1);
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
         }
         
-        .error-text {
-          background: #fee2e2;
-          color: #991b1b;
+        .question-manager-card .error-text {
+          background: rgba(239, 68, 68, 0.15);
+          color: rgba(255, 255, 255, 0.95);
           padding: 1rem 1.25rem;
           border-radius: 10px;
           margin-bottom: 1.5rem;
@@ -181,40 +180,44 @@ export default function QuestionManager() {
           font-weight: 500;
         }
         
-        .list {
+        .question-manager-card .list {
           list-style: none;
           padding: 0;
           margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
         }
         
-        .list-item {
+        .question-manager-card .list-item {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 1.25rem 1.5rem;
-          background: #f8fafc;
-          border: 2px solid #e2e8f0;
-          border-radius: 12px;
-          margin-bottom: 1rem;
+          padding: 1rem 1.25rem;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          border-radius: 10px;
+          margin-bottom: 0;
           transition: all 0.2s ease;
           gap: 1rem;
         }
         
-        .list-item:hover {
-          border-color: #cbd5e1;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        .question-manager-card .list-item:hover {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(255, 255, 255, 0.25);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
           transform: translateX(4px);
         }
         
-        .list-item > div {
+        .question-manager-card .list-item > div {
           flex: 1;
-          color: #475569;
+          color: white;
           line-height: 1.6;
         }
         
-        .list-item strong {
+        .question-manager-card .list-item strong {
           display: inline-block;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
           color: white;
           padding: 0.25rem 0.75rem;
           border-radius: 6px;
@@ -223,52 +226,35 @@ export default function QuestionManager() {
           font-weight: 600;
         }
         
-        .loader {
-          border: 4px solid #e2e8f0;
-          border-top: 4px solid #667eea;
-          border-radius: 50%;
-          width: 50px;
-          height: 50px;
-          animation: spin 1s linear infinite;
-          margin: 0 auto;
-        }
-        
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
-        .empty-state {
+        .question-manager-card .empty-state {
           text-align: center;
-          padding: 3rem 1rem;
-          color: #94a3b8;
-          font-size: 1.125rem;
+          padding: 2rem 1rem;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 1rem;
         }
         
         @media (max-width: 640px) {
-          body {
-            padding: 1rem;
+          .question-manager-card {
+            padding: 1.25rem;
+            margin: 0 1rem;
           }
           
-          .card {
-            padding: 1.5rem;
+          .question-manager-card h3 {
+            font-size: 1.35rem;
           }
           
-          h3 {
-            font-size: 1.5rem;
-          }
-          
-          .list-item {
+          .question-manager-card .list-item {
             flex-direction: column;
             align-items: flex-start;
+            padding: 0.85rem 1rem;
           }
           
-          .list-item button {
+          .question-manager-card .list-item button {
             align-self: flex-end;
           }
         }
       `}</style>
-    <div className="card">
+    <div className="question-manager-card">
       <h3>Manage Questions</h3>
       <form onSubmit={addQuestion} className="form-grid">
         <input value={questionText} onChange={(e) => setQuestionText(e.target.value)} placeholder="Question text" required />
@@ -278,6 +264,8 @@ export default function QuestionManager() {
       {error && <div className="error-text">{error}</div>}
       {loading ? (
         <Loader label="Loading questions..." />
+      ) : questions.length === 0 ? (
+        <div className="empty-state">No questions yet. Add your first question above.</div>
       ) : (
         <ul className="list">
           {questions.map((q) => (

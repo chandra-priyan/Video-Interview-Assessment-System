@@ -4,29 +4,13 @@ html {
 }
 
 body {
-  background: var(--bg-primary, #ffffff);
-  color: var(--text-primary, #0f172a);
+  background: var(--bg-primary, #0f172a);
+  color: var(--text-primary, #f1f5f9);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Light Theme (Default) */
-:root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-card: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --border-hover: #cbd5e1;
-  --shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.04);
-  --shadow-md: 0 4px 12px rgba(2, 6, 23, 0.08);
-  --shadow-lg: 0 10px 24px rgba(2, 6, 23, 0.12);
-  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-}
-
-/* Dark Theme */
+/* Dark Theme Only */
+:root,
 [data-theme="dark"] {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;

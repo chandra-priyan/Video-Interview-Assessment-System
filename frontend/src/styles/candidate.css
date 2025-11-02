@@ -39,37 +39,70 @@
 
 /* Dashboard Container */
 .candidate-dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.candidate-dashboard-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 24px 60px;
-  background: var(--bg-primary);
+  padding: 120px 24px 60px;
   min-height: 100vh;
+  box-sizing: border-box;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Header Section */
 .candidate-dashboard h2 {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 800;
-  margin-bottom: 8px;
-  letter-spacing: -0.4px;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
   color: var(--text-primary);
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-align: center;
 }
 
 /* Toolbar */
 .candidate-dashboard .toolbar {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
-  margin-bottom: 32px;
-  padding: 24px;
+  margin-bottom: 40px;
+  padding: 28px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 20px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .candidate-dashboard .toolbar button {
@@ -121,10 +154,10 @@
 
 /* Section Headers */
 .candidate-dashboard h3 {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
   color: var(--text-primary);
-  margin: 32px 0 20px;
+  margin: 0 0 24px 0;
   position: relative;
   padding-left: 16px;
 }
@@ -136,9 +169,39 @@
   top: 50%;
   transform: translateY(-50%);
   width: 4px;
-  height: 24px;
+  height: 28px;
   background: var(--gradient-primary);
   border-radius: 2px;
+}
+
+/* Error Message */
+.candidate-dashboard .error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #dc2626;
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-weight: 500;
+  text-align: center;
+}
+
+[data-theme="dark"] .candidate-dashboard .error-message {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+/* Empty State */
+.candidate-dashboard .empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--bg-card);
+  border: 2px dashed var(--border-color);
+  border-radius: 16px;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 500;
 }
 
 /* Questions Grid */
@@ -201,17 +264,19 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .candidate-dashboard {
-    padding: 24px 16px 48px;
+  .candidate-dashboard-inner {
+    padding: 100px 16px 48px;
   }
   
   .candidate-dashboard h2 {
     font-size: 28px;
+    margin-bottom: 20px;
   }
   
   .candidate-dashboard .toolbar {
     padding: 20px;
     gap: 12px;
+    margin-bottom: 32px;
   }
   
   .candidate-dashboard .toolbar button {
@@ -233,12 +298,18 @@
 }
 
 @media (max-width: 480px) {
-  .candidate-dashboard {
-    padding: 20px 12px 40px;
+  .candidate-dashboard-inner {
+    padding: 90px 12px 40px;
   }
   
   .candidate-dashboard h2 {
     font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .candidate-dashboard .toolbar {
+    padding: 16px;
+    margin-bottom: 24px;
   }
   
   .candidate-dashboard .toolbar button {

@@ -155,11 +155,12 @@ export default function RecordAnswer() {
   return (
     <div className="record-answer-container">
       <div className="record-answer-card">
-        <div className="record-answer-header">
-          <h1 className="record-answer-title">Record Your Answer</h1>
-        </div>
+        <div className="record-answer-inner">
+          <div className="record-answer-header">
+            <h1 className="record-answer-title">Record Your Answer</h1>
+          </div>
 
-        {/* Question Section */}
+          {/* Question Section */}
         <div className="question-section">
           <div className="question-header">
             <span className="question-label">Question</span>
@@ -243,6 +244,7 @@ export default function RecordAnswer() {
           </div>
         </div>
 
+        </div>
       </div>
     </div>
   )

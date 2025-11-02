@@ -23,19 +23,23 @@ export default function QuestionList() {
   }, [])
 
   if (loading) return <Loader label="Loading questions..." />
-  if (error) return <div style={{ color: 'red' }}>{error}</div>
+  if (error) return <div className="error-message">{error}</div>
 
   return (
-    <div>
+    <div className="questions-section">
       <h3>Questions</h3>
-      <ul>
-        {questions.map((q) => (
-          <li key={q.id} style={{ marginBottom: 12 }}>
-            <strong>{q.title}</strong>
-            <div style={{ color: '#555' }}>{q.prompt}</div>
-          </li>
-        ))}
-      </ul>
+      {questions.length === 0 ? (
+        <div className="empty-state">No questions available yet.</div>
+      ) : (
+        <ul>
+          {questions.map((q) => (
+            <li key={q.id}>
+              <strong>{q.title}</strong>
+              <div>{q.prompt}</div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

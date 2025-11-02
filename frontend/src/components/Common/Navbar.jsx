@@ -26,7 +26,10 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <Link to="/home" className="brand">🎥 Tech Interview Portal</Link>
+        <Link to="/home" className="brand">
+          <span className="brand-icon">🎥</span>
+          <span className="brand-text">Tech Interview Portal</span>
+        </Link>
         <nav className="nav-links">
           {!isAuthed ? (
             <>
