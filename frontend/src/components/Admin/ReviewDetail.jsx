@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../utils/api'
 import Loader from '../Common/Loader'
 
 export default function ReviewDetail() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [item, setItem] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
   const [saving, setSaving] = useState(false)
+  const [showSavedPopup, setShowSavedPopup] = useState(false)
+  const [isAlreadySaved, setIsAlreadySaved] = useState(false)
 
   useEffect(() => {
     let mounted = true
@@ -21,6 +24,8 @@ export default function ReviewDetail() {
           setItem(data)
           setRating(data?.rating || 0)
           setComment(data?.comment || '')
+          // Check if review is already saved (has rating or comment)
+          setIsAlreadySaved(!!(data?.rating || data?.comment))
         }
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to load review')
@@ -36,6 +41,12 @@ export default function ReviewDetail() {
     setError('')
     try {
       await api.post(`/admin/response/${id}/review`, { rating: Number(rating), comment })
+      // Show saved popup
+      setShowSavedPopup(true)
+      // Navigate back after a short delay to show the popup
+      setTimeout(() => {
+        navigate('/admin')
+      }, 1500)
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save review')
     } finally {
@@ -49,6 +60,15 @@ export default function ReviewDetail() {
 
   return (
     <>
+    {/* Saved Popup */}
+    {showSavedPopup && (
+      <>
+        <div className="popup-overlay"></div>
+        <div className="saved-popup">
+          Saved Successfully!
+        </div>
+      </>
+    )}
     <style>{`/* Card Container */
 .card {
   background: white;
@@ -308,9 +328,98 @@ html {
   background: #667eea;
   color: white;
 }
+
+/* Saved Popup */
+.saved-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
+  z-index: 1000;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: popupSlideIn 0.3s ease-out;
+}
+
+.saved-popup::before {
+  content: '✓';
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Already Saved Indicator */
+.already-saved-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 16px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.already-saved-indicator::before {
+  content: '✓';
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
 `}</style>
     <div className="card">
-      <h3>{item.candidateName} - {item.questionTitle}</h3>
+      <h3>
+        {item.candidateName} - {item.questionTitle}
+        {isAlreadySaved && (
+          <span className="already-saved-indicator">
+            Already Saved
+          </span>
+        )}
+      </h3>
       <video src={item.videoUrl} controls className="full-width" />
       <div className="stack mt-16">
         <div className="row">

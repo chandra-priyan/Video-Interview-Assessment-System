@@ -41,7 +41,8 @@ function App() {
         <Navbar />
         <div className="container">
           <Routes>
-            <Route path="/" element={<Navigate to={isAuthed ? (isAdmin ? '/admin' : '/candidate') : '/login'} replace />} />
+            <Route path="/" element={isAuthed ? <Navigate to={isAdmin ? '/admin' : '/candidate'} replace /> : <Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={isAuthed ? <Navigate to={isAdmin ? '/admin' : '/candidate'} replace /> : <Login />} />
             <Route path="/signup" element={isAuthed ? <Navigate to={isAdmin ? '/admin' : '/candidate'} replace /> : <Signup />} />
 

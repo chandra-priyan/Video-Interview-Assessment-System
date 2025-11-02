@@ -26,12 +26,12 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <div className="brand">Tech Interview Portal</div>
+        <Link to="/home" className="brand">🎥 Tech Interview Portal</Link>
         <nav className="nav-links">
           {!isAuthed ? (
             <>
               <Link to="/login" className={`nav-link ${isActive('/login') ? 'active' : ''}`}>Login</Link>
-              <Link to="/signup" className={`nav-link ${isActive('/signup') ? 'active' : ''}`}>Signup</Link>
+              <Link to="/signup" className={`nav-link ${isActive('/signup') ? 'active' : ''}`}>Sign Up</Link>
               <ThemeToggle />
             </>
           ) : (
