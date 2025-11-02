@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
+  'https://video-interview-assessment-system.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean)
 
